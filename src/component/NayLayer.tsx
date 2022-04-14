@@ -9,18 +9,6 @@ const useStyle = makeStyles((theme) => ({
     backgroundColor: 'rgba(255,255,255,1)',
     display: 'flex',
   },
-  sectionDesktop: {
-    display: 'none',
-    [theme.breakpoints.up('md')]: {
-      display: 'flex',
-    },
-  },
-  sectionMobile: {
-    display: 'flex',
-    [theme.breakpoints.up('md')]: {
-      display: 'none',
-    },
-  },
 }));
 
 const NavLayer = () => {
@@ -28,14 +16,7 @@ const NavLayer = () => {
   
   return (
     <div className={classes.navStyle}>
-      <div className={classes.sectionDesktop}>
-        <ConnectButton />
-      </div>
-      <div className={classes.sectionMobile}>
-        <IconButton>
-          <Menu />
-        </IconButton>
-      </div>
+      <ConnectButton />
     </div>
   );
 };
