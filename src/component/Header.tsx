@@ -31,6 +31,7 @@ const useStyle = makeStyles((theme) => ({
 
 const Header = () => {
   const classes = useStyle();
+  
   return (
     <div className={classes.wrap}>
       <div className={classes.logoContainer}>

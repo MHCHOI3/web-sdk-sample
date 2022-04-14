@@ -25,6 +25,7 @@ const useStyle = makeStyles((theme) => ({
 
 const NavLayer = () => {
   const classes = useStyle();
+  
   return (
     <div className={classes.navStyle}>
       <div className={classes.sectionDesktop}>
