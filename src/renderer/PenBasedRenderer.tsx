@@ -23,12 +23,17 @@ const PenBasedRenderer = () => {
   }, []);
 
   useEffect(() => {
+    /**
+     * PenHelper dotCallback function을 사용하여,
+     * dot이 들어올때마다 strokeProcess에 dot을 넘겨주어 처리할 수 있도록 한다.
+     */
     PenHelper.dotCallback = (mac, dot) => {
       setCtx(canvasFb.getContext());
       strokeProcess(dot);
     }
   });
 
+  // Initializing Canvas
   const initCanvas = () => { 
     return new fabric.Canvas('sampleCanvas', {
       width: window.innerWidth,
