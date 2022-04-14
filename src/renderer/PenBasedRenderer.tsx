@@ -17,16 +17,18 @@ const PenBasedRenderer = () => {
   const classes = useStyle();
   const [canvasFb, setCanvasFb] = useState<fabric.Canvas>(null);
   const [ctx, setCtx] = useState(null);
+  // canvas size
+  const [width, height] = [940, 510];
+  // 3.27.387 paper size
+  const [yMax, yMin] = [121.608635, 3.4970238];
+  const [xMax, xMin] = [94.6116, 3.4970238];
+  const [yLen, xLen] = [yMax-yMin, xMax-xMin];
 
   useEffect(() => {
     setCanvasFb(initCanvas());
   }, []);
 
   useEffect(() => {
-    /**
-     * PenHelper dotCallback function을 사용하여,
-     * dot이 들어올때마다 strokeProcess에 dot을 넘겨주어 처리할 수 있도록 한다.
-     */
     PenHelper.dotCallback = (mac, dot) => {
       setCtx(canvasFb.getContext());
       strokeProcess(dot);
@@ -35,13 +37,16 @@ const PenBasedRenderer = () => {
 
   // Initializing Canvas
   const initCanvas = () => { 
-    return new fabric.Canvas('sampleCanvas', {
-      width: window.innerWidth,
-      height: window.innerHeight
-    }); 
+    const canvas = new fabric.Canvas('sampleCanvas');
+    
+    return canvas
   }
 
   const strokeProcess = (dot) => {
+    // Calculate dot ratio
+    const dx = (dot.x * width) / xLen;
+    const dy = (dot.y * height) / yLen;
+
     // Pen Down
     if (dot.dotType === 0) {
       ctx.beginPath();
@@ -54,11 +59,11 @@ const PenBasedRenderer = () => {
         return
       }
       ctx.lineWidth = 2;
-      ctx.lineTo(dot.x * 10, dot.y * 10);
+      ctx.lineTo(dx, dy);
       ctx.stroke();
       ctx.closePath();
       ctx.beginPath();
-      ctx.moveTo(dot.x * 10, dot.y * 10);
+      ctx.moveTo(dx, dy);
     } else {  // Pen Up
       ctx.closePath();
     }
@@ -66,7 +71,7 @@ const PenBasedRenderer = () => {
 
   return (
     <div className={classes.mainBackground}>
-      <canvas id="sampleCanvas" width={window.innerWidth} height={window.innerHeight}></canvas>
+      <canvas id="sampleCanvas" width={width} height={height}></canvas>
     </div>
   );
 };
