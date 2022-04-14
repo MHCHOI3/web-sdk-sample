@@ -37,9 +37,14 @@ const PenBasedRenderer = () => {
   }
 
   const strokeProcess = (dot) => {
+    // Pen Down
     if (dot.dotType === 0) {
       ctx.beginPath();
-    } else if (dot.dotType === 1) {
+    } else if (dot.dotType === 1) { // Pen Move
+      /**
+       * dot이 들어올 때, 비정상적으로 하나씩 튀는 dot이 존재하여
+       * 좌표가 너무 커지면 return 될 수 있도록 하였습니다.
+       */ 
       if (dot.x > 1000 || dot.y > 1000) {
         return
       }
@@ -49,7 +54,7 @@ const PenBasedRenderer = () => {
       ctx.closePath();
       ctx.beginPath();
       ctx.moveTo(dot.x * 10, dot.y * 10);
-    } else {
+    } else {  // Pen Up
       ctx.closePath();
     }
   }
